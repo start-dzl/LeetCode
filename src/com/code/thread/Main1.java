@@ -6,7 +6,7 @@ public class Main1 {
         var dec = new DecThread();
         add.start();
         dec.start();
-        add.join();
+//        add.join();
         dec.join();
         System.out.println(Counter.count);
     }
@@ -18,6 +18,7 @@ class Counter {
 }
 
 class AddThread extends Thread {
+    @Override
     public void run() {
         for (int i=0; i<10000; i++) {
             synchronized(Counter.lock) {
@@ -29,6 +30,7 @@ class AddThread extends Thread {
 }
 
 class DecThread extends Thread {
+    @Override
     public void run() {
         for (int i=0; i<10000; i++) {
             synchronized(Counter.lock) {

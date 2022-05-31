@@ -28,14 +28,16 @@ public class ThreadTest {
             Future<Object> objectFuture = executor.submit(task);
             linkedList.add(objectFuture);
         }
-//        while (!linkedList.isEmpty()){
-//            Future<Object> peek = linkedList.peek();
-//            if(peek.isDone()) {
-//                Object o = peek.get();
-//                System.out.println(o+ "======");
-//                linkedList.poll();
-//            }
-//        }
+        while (!linkedList.isEmpty()){
+            Future<Object> peek = linkedList.peek();
+            if(peek.isDone()) {
+                Object o = peek.get();
+                System.out.println(o+ "======");
+                linkedList.poll();
+            }else if (peek.isCancelled()) {
+                System.out.println(peek.isCancelled());
+            }
+        }
 
         System.in.read(); //阻塞主线程
     }

@@ -1,14 +1,37 @@
 package com.code.thread;
 
 import java.time.LocalTime;
+import java.util.concurrent.*;
 
 public class th1 {
-    public static void main(String[] args)  throws InterruptedException {
-        TimerThread t = new TimerThread();
-        t.setDaemon(true);
-        t.start();
+    public static void main(String[] args) throws InterruptedException, ExecutionException {
 
-        Thread.sleep(1);
+        FutureTask<Integer> futureTask = new FutureTask<Integer>(new Callable<Integer>() {
+            @Override
+            public Integer call() throws Exception {
+                int result = 0;
+                for (int i = 0; i < 100; i++) {
+                    Thread.sleep(10);
+                    result += i;
+                }
+                return result;
+            }
+        });
+
+        Thread computeThread = new Thread(futureTask);
+        computeThread.start();
+
+        Thread otherThread = new Thread(() -> {
+            System.out.println("other task is running...");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        otherThread.start();
+        System.out.println(futureTask.get());
+
     }
 }
 
