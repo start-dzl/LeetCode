@@ -9,6 +9,9 @@ import java.util.Queue;
 
 public class n297 {
 
+    String split = ",";
+    String n = "null";
+
     // Encodes a tree to a single string.
     public String serialize(TreeNode root) {
         if (Objects.isNull(root)) {
@@ -24,9 +27,9 @@ public class n297 {
             for (int i = 0; i < i1; i++) {
                 TreeNode poll = queue.poll();
                 if (Objects.isNull(poll)) {
-                    result.append("null,");
+                    result.append(n).append(split);
                 } else {
-                    result.append(poll.val).append(",");
+                    result.append(poll.val).append(split);
                     if (!Objects.isNull(poll.left)) {
                         end = poll.left;
                     }
@@ -49,9 +52,9 @@ public class n297 {
         if (substring.isEmpty()) {
             return null;
         }
-        String[] strings = substring.split(",");
+        String[] strings = substring.split(split);
         String str = strings[0];
-        if ("null".equals(str) || "".equals(str)) {
+        if (n.equals(str)) {
             return null;
         }
         TreeNode node = new TreeNode(Integer.valueOf(str));
@@ -66,17 +69,13 @@ public class n297 {
                 num++;
                 String right = strings[num];
                 num++;
-                if ("null".equals(left) || "".equals(left)) {
-
-                } else {
+                if (!n.equals(left)) {
                     TreeNode nodeleft = new TreeNode(Integer.valueOf(left));
                     poll.left = nodeleft;
                     queue.add(nodeleft);
                 }
 
-                if ("null".equals(right) || "".equals(right)) {
-
-                } else {
+                if (!n.equals(right)) {
                     TreeNode noderight = new TreeNode(Integer.valueOf(right));
                     poll.right = noderight;
                     queue.add(noderight);
